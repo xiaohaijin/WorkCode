@@ -18,7 +18,7 @@
 #include "StStrangeMuDstMaker/StV0MuDst.hh"
 //#include "StStrangeMuDstMaker/StStrangeEvMuDst.hh"
 
-#define XIAOHAI
+//#define XIAOHAI
 #ifdef XIAOHAI
 #  include "COMMON/StMuBTofHit.h"
 #  include "COMMON/StMuBTofPidTraits.h"  //TOF Info.
