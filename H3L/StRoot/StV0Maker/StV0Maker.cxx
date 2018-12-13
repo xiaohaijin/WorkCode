@@ -106,8 +106,8 @@ void StV0Maker::initParam() {
 
   cutAbsNSigma2Le = 3.0;
 
-  cutDca1GrEq = 1.00;
-  cutDca2GrEq = 0.5;
+  cutDca1GrEq = 0.0;
+  cutDca2GrEq = 0.0;
 
   cutDca1to2LeEq = 1.0;
   cutV0MassWidthLeEq = 0.5;
@@ -185,8 +185,10 @@ void StV0Maker::initHisto() {
   hdau1InvBetaP = new TH2F("dau1InvBetaP", "dau1InvBeta vs. Rigidity", nbins * 20, -10.0, 10.0, nbins * 5, 0.0, 5.0);
   hdau2InvBetaP = new TH2F("dau2InvBetaP", "dau2InvBeta vs. Rigidity", nbins * 20, -10.0, 10.0, nbins * 5, 0.0, 5.0);
 
-  hdau1DiffInvBetaP = new TH2F("dau1DiffInvBetaP", "dau1DiffInvBeta vs. Rigidity", nbins * 20, -10.0, 10.0, nbins * 20, -1.0, 1.0);
-  hdau2DiffInvBetaP = new TH2F("dau2DiffInvBetaP", "dau2DiffInvBeta vs. Rigidity", nbins * 20, -10.0, 10.0, nbins * 20, -1.0, 1.0);
+  hdau1DiffInvBetaP =
+      new TH2F("dau1DiffInvBetaP", "dau1DiffInvBeta vs. Rigidity", nbins * 20, -10.0, 10.0, nbins * 20, -1.0, 1.0);
+  hdau2DiffInvBetaP =
+      new TH2F("dau2DiffInvBetaP", "dau2DiffInvBeta vs. Rigidity", nbins * 20, -10.0, 10.0, nbins * 20, -1.0, 1.0);
 
   // QA for V0's
   hInvMass = new TH1F("V0Mass", "V0 Inv. Mass", nbins * 2, mMassV0 - cutV0MassWidthLeEq, mMassV0 + cutV0MassWidthLeEq);
@@ -412,7 +414,7 @@ Int_t StV0Maker::Make() {
   //	Record some information...
 
   hVertexZ->Fill(muEvent->primaryVertexPosition().z());  // Make histogram of the vertex Z distribution
-  hSelectNRefMult->Fill(temprefMult);                    // this is an ESSENTIAL histogram to record the total number of events for
+  hSelectNRefMult->Fill(temprefMult);  // this is an ESSENTIAL histogram to record the total number of events for
   // certain centrality. always make sure it is filled AFTER event selection!
 
   Double_t magn = muEvent->runInfo().magneticField();
@@ -458,7 +460,8 @@ Int_t StV0Maker::Make() {
     StThreeVectorD p = helix.momentum(magn * kilogauss);  // momentum at origin
     StThreeVectorD origin = helix.origin();               // origin of helix
     StThreeVectorF pv = muEvent->primaryVertexPosition();
-    double pathlength = helix.pathLength(pv, false);  // do scan periods.NOTE:the default is false.this is not necessary for tracks with pt>0.15GeV/c
+    double pathlength = helix.pathLength(
+        pv, false);  // do scan periods.NOTE:the default is false.this is not necessary for tracks with pt>0.15GeV/c
 
     StThreeVectorF dca = helix.at(pathlength) - pv;
     float tofbeta = -999.0;
@@ -786,7 +789,8 @@ Int_t StV0Maker::Make() {
 
       mV0Dst.v0mass[nV0] = v0mass;
       mV0Dst.v0pt[nV0] = pv0.perp();
-      mV0Dst.v0rapidity[nV0] = log((sqrt(v0mass * v0mass + pv0.mag2()) + pv0.z()) / sqrt(v0mass * v0mass + pv0.perp2()));
+      mV0Dst.v0rapidity[nV0] =
+          log((sqrt(v0mass * v0mass + pv0.mag2()) + pv0.z()) / sqrt(v0mass * v0mass + pv0.perp2()));
       mV0Dst.v0eta[nV0] = 0.5 * log((pv0.mag() + pv0.z()) / (pv0.mag() - pv0.z()));
       mV0Dst.v0x[nV0] = xv0.x();
       mV0Dst.v0y[nV0] = xv0.y();
@@ -908,7 +912,8 @@ Int_t StV0Maker::Finish() {
   return kStOk;
 }
 
-StPhysicalHelixD StV0Maker::RotHelix(StPhysicalHelixD Helix, StThreeVectorD Pv, double degree, double magn, int charge) {
+StPhysicalHelixD StV0Maker::RotHelix(StPhysicalHelixD Helix, StThreeVectorD Pv, double degree, double magn,
+                                     int charge) {
   double SIN = sin((degree / 180.0) * TMath::Pi()) * 1000.0;
   double COS = cos((degree / 180.0) * TMath::Pi()) * 1000.0;
 

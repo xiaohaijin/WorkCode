@@ -106,8 +106,8 @@ void StV0Maker::initParam() {
 
   cutAbsNSigma2Le = 3.0;
 
-  cutDca1GrEq = 1.00;
-  cutDca2GrEq = 0.5;
+  cutDca1GrEq = 0.0;
+  cutDca2GrEq = 0.0;
 
   cutDca1to2LeEq = 1.0;
   cutV0MassWidthLeEq = 0.5;
