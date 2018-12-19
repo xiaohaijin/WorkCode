@@ -148,7 +148,7 @@ int main(int argc, char* argv[])
         tracks = v0->nv0;
 
         if (v0->primvertexZ < 210 || v0->primvertexZ > 212) {
-            break;
+            continue;
         }
 
         for (int t = 0; t != tracks; ++t) {
@@ -184,9 +184,9 @@ int main(int argc, char* argv[])
 	  v0Mass5->Fill(static_cast<double>(v0->v0mass[t]));
 
   
-	  // if (v0->dau1dca[t] < 0.0f || v0->dau1dca[t] > 1.0f) {
-	  //   continue;
-	  // }
+	  if (v0->dau1dca[t] < 0.0f || v0->dau1dca[t] > 1.0f) {
+	    continue;
+	  }
 	  v0Mass4->Fill(static_cast<double>(v0->v0mass[t]));
 	    
 	  if (v0->dau2dca[t] < 1.5 || v0->dau2dca[t] > 15) {

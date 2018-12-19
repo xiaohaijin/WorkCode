@@ -148,7 +148,7 @@ int main(int argc, char* argv[])
         tracks = v0->nv0;
 
         if (v0->primvertexZ < 210 || v0->primvertexZ > 212) {
-            break;
+            continue;
         }
 
         for (int t = 0; t != tracks; ++t) {
